@@ -1,0 +1,167 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<script>
+    $(function () {
+        $.ajax({
+            url: '/Home/Get',
+            type: 'POST',
+            data: {},
+            success: function (data) {
+                GETDDDD(data.lst);
+          
+            }
+
+        })
+
+
+    });
+
+
+    function GETDDDD(data) {
+
+        Highcharts.chart('container', {
+            chart: {
+                zoomType: 'xy'
+            },
+            title: {
+                text: 'Thống kê danh số bán hàng',
+                align: 'left'
+            },
+            subtitle: {
+                text: 'Test',
+                align: 'left'
+            },
+            xAxis: [{
+                categories: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12",],
+                crosshair: true
+            }],
+            yAxis: [{ // Primary yAxis
+                labels: {
+                    format: '{value} Cái',
+                    style: {
+                        color: Highcharts.getOptions().colors[2]
+                    }
+                },
+                title: {
+                    text: 'Cái',
+                    style: {
+                        color: Highcharts.getOptions().colors[2]
+                    }
+                },
+                opposite: true
+
+            }, { // Secondary yAxis
+                gridLineWidth: 0,
+                title: {
+                    text: 'VND',
+                    style: {
+                        color: Highcharts.getOptions().colors[0]
+                    }
+                },
+                labels: {
+                    format: '{value} VND',
+                    style: {
+                        color: Highcharts.getOptions().colors[0]
+                    }
+                }
+
+            }],
+            tooltip: {
+                shared: true
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'left',
+                x: 100,
+                verticalAlign: 'top',
+                y: 55,
+                floating: true,
+                backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || 'rgba(255,255,255,0.25)'
+            },
+            series: data,
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            floating: false,
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom',
+                            x: 0,
+                            y: 0
+                        }
+                    }
+                }]
+            }
+        });
+        //Highcharts.chart('container', {
+        //	chart: {
+        //	type: 'column'
+        //	},
+        //	title: {
+        //	text: 'Monthly Average Rainfall'
+        //	},
+        //	subtitle: {
+        //	text: 'Source: WorldClimate.com'
+        //	},
+        //	xAxis: {
+        //	categories: ['cot 1','cot 2'],
+        //	crosshair: true
+        //	},
+        //	yAxis: {
+        //	min: 0,
+        //	title: {
+        //	text: 'Rainfall (mm)'
+        //	}
+        //	},
+        //	tooltip: {
+        //	headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        //	pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+        //	'<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+        //	footerFormat: '</table>',
+        //	shared: true,
+        //	useHTML: true
+        //	},
+        //	plotOptions: {
+        //	column: {
+        //	pointPadding: 0.2,
+        //	borderWidth: 0
+        //	}
+        //	},
+        //	series: data
+        //});
+    }
+
+
+//[{
+//	name: 'Tokyo',
+//	data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+
+//}, {
+//	name: 'New York',
+//	data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+
+//	}, {
+//	name: 'London',
+//	data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
+
+//	}, {
+//	name: 'Berlin',
+//	data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
+
+//	}]
+</script>
